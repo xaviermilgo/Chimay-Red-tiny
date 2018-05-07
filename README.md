@@ -12,11 +12,13 @@ The Ropchains file contains ropchains for all 6.* firmware releases.
 The specified command will copy the user data file to an accessible location hence we will be able to download the data and decrypt credentials.
 
 ## Setup and Use
- . Clone this Repo
+Clone this Repo
  	```git clone https://github.com/reivhax/Chimay-Red-tiny.git```
- . Move to the new folder
+
+Move to the new folder
  	```cd Chimay-Red-tiny```
- . Run the script against your target
+
+Run the script against your target
  	```python chimayred.py TARGET_IP```	
 
 ## Dependencies
