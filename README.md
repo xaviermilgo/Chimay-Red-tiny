@@ -2,9 +2,9 @@
 Exploit x86 **Mikrotik** routers and gain credentials.
 
 ## Author
-#### Xavier Kibet	| Ropchain Compilation and packing.
-#### BigNerd95		| Implemented the vulnerability
-#### wikileaks		| Vulnerability Disclosure
+#### Wikileaks	+= Vulnerability Disclosure
+#### BigNerd95	+= Implemented the vulnerability
+#### Reivhax	  += Ropchain Compilation and packing.
 
 ## Description
 This exploit will exploit x86-based Mikrotik routers with Firmware version < **6.38.5**
@@ -14,15 +14,15 @@ The specified command will copy the user data file to an accessible location hen
 ## Setup and Use
 Clone this Repo
 
- 	`git clone https://github.com/reivhax/Chimay-Red-tiny.git`
+ 	git clone https://github.com/reivhax/Chimay-Red-tiny.git
 
 Move to the new folder
 
- 	`cd Chimay-Red-tiny`
+ 	cd Chimay-Red-tiny
 
 Run the script against your target
 
- 	`python chimayred.py TARGET_IP`	
+ 	python chimayred.py TARGET_IP
 
 ## Dependencies
 This exploits **does not** require any dependecies.
