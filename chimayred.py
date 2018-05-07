@@ -1,4 +1,4 @@
-import requests,socket,hashlib
+import requests,socket,hashlib,sys
 from time import sleep
 
 class printer():
@@ -124,8 +124,8 @@ class Vuln():
 		else:
 			print_e("How can I attack a target that is not vulnerable?")
 if __name__ == "__main__":
-	if len(sys.srgv) > 1:
-		router=Vuln(sys.argv[1],sys.argv[2] if len(sys.srgv) == 3 else 80)
+	if len(sys.argv) > 1:
+		router=Vuln(sys.argv[1],sys.argv[2] if len(sys.argv) == 3 else 80)
 		router.exploit()
 	else:
 		print_e('Usage: %s IP [PORT]'%sys.argv[0])
