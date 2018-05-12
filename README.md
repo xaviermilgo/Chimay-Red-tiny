@@ -33,6 +33,8 @@ It uses default python modules; requests,socket,hashlib and time.
 ## Bug reports and support
 Incase of any problem, please open a issue, I will be ready to assist you.
 
+## TODO
+ Expand router exploitation to mipsbe routers too
 ## References
 [Wikileaks](https://wikileaks.org/ciav7p1/cms/page_16384604.html)
 
