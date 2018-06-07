@@ -9,8 +9,7 @@ Exploit x86 and mipsbe **Mikrotik** routers and gain credentials.
 All you need to successfully exploit a router:
 
 - A vulnerable router
-- A python interpreter
-- Network Acess to the router
+- Network Access to the router
 - < 20 seconds of patience
 ## Description
 This exploit will exploit x86-based and mipsbe Mikrotik routers with Firmware version < **6.38.5**
