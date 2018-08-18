@@ -1,6 +1,7 @@
 # Chimay-Red-tiny
 Exploit x86 and mipsbe **Mikrotik** routers and gain credentials.
 
+![screenshot](http://i.imgur.com/f6rCQSf.png)
 ## Author
 #### Wikileaks	+= Vulnerability Disclosure
 #### BigNerd95	+= Implemented the vulnerability
