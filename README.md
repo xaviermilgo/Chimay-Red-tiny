@@ -34,7 +34,7 @@ Run the script against your target
 
 ## Dependencies
 This exploits **does not** require any dependecies.
-It uses default python modules; requests,socket,hashlib and time.
+It uses default python modules; urllib,socket,hashlib and time.
 
 ## Bug reports and support
 Incase of any problem, please open a issue, I will be ready to assist you.
