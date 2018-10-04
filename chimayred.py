@@ -41,7 +41,7 @@ class Vuln():
 		#We have to confirm this router version is earlier than 6.38.5
 		#Any better logic will be appreciated
 		router_version=self.version.replace('.','')#remove decimal points
-		router_version=router_version+'0'*(5-len(router_version))#pad to length of 5
+		router_version=router_version.ljust(5,'0')#pad to length of 5
 		if int(router_version)>63840:
 			return False
 		return True
